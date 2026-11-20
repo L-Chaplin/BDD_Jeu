@@ -37,7 +37,7 @@
             font-family: "Space Grotesk", sans-serif;
             font-optical-sizing: auto;
             font-style: normal;
-            padding: 32px;
+            padding: 20px;
             border: 1px solid #000000;
             border-radius: 15px;
             background-color: #B5663680;
@@ -51,7 +51,7 @@
             font-family: "Space Grotesk", sans-serif;
             font-optical-sizing: auto;
             font-style: normal;
-            padding: 32px;
+            padding: 20px;
             border: 1px solid #000000;
             border-radius: 15px;
             background-color: #B5663680;
@@ -85,9 +85,14 @@
         }
 
 
-        $req = mysqli_query($conn, "SELECT username, password FROM Users WHERE grade = 1");
+        $req = mysqli_query($conn, "SELECT username, password FROM Users WHERE grade = 1 LIMIT 1");
         if ($req) {
-            header('Location:https://localhost/BDD_Jeu/accueil.php');
+            for ($i=0; $i < mysqli_num_rows($req); $i++) {
+                $ligne = mysqli_fetch_array($req, MYSQLI_ASSOC);
+                if ($ligne["username"] == $_POST["id"] && $ligne["password"] == $_POST["mdp"]) {
+                    header('Location:https://localhost/BDD_Jeu/accueil.php');
+                }
+            }
         }
     ?>
     <div class="article">
